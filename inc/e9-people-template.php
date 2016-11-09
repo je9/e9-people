@@ -32,7 +32,8 @@ function e9_people_template() {
   $return = '<div class="e9-people">';
 
   $args = [
-    'post_type' => 'person'
+    'post_type' => 'person',
+    'posts_per_page' => 6
   ];
   $query =  new WP_Query($args);
   $person_number = 0;
@@ -42,11 +43,12 @@ function e9_people_template() {
       $contact = get_post_meta($query->post->ID, '', true)[0];
       $email = $contact['email'];
       $phone = $contact['phone'];
-      $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($query->post->ID),'medium')[0];
-      
+      $thumb_id = get_post_thumbnail_id($query->post->ID);
+      $thumb = wp_get_attachment_image_src($thumb_id,'medium');
+      $img_class = $thumb[1] > $thumb[2] ? 'landscape' : 'portrait';
       $return .= '<div class="one-fourth' . ($person_number % 4 == 0 ? ' first' : '') . '" data-order="' . $person_number . '">';
       $return .= '<div class="e9-person">';
-      $return .= '<img src="' . $thumb . '" alt="' . $query->post->post_title . '" />';
+      $return .= '<div class="ratio-square"><img src="' . $thumb[0] . '" alt="' . $query->post->post_title . '" class="' . $img_class . '" /></div>';
       $return .= '<h3>' . $query->post->post_title . '</h3>';
       $return .= '<p>' . $excerpt;
       if (!empty( $excerpt)): 

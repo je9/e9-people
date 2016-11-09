@@ -50,7 +50,7 @@ function person_details_html($object) {
 <table class="form-table">
   <tr>
     <th>
-      <label for="meta-box-phone">Phone number</label>
+      <label for="meta-box-phone">Phone</label>
     </th>
     <td>
       <input 
